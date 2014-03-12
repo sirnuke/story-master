@@ -22,6 +22,8 @@ end
 
 Dir.chdir File.dirname(__FILE__) + Constants::SOURCE_DIRECTORY do
   require './logging'
+  require './position'
+  require './exceptions'
 end
 
 def usage
@@ -84,4 +86,5 @@ if source
   Log.i 'SM', "Processing #{source} -> #{output}"
 else
   Log.i 'SM', "Processing $stdin -> $stdout"
+end
 
