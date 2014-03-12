@@ -22,7 +22,6 @@ class Parser
     File.open filename, 'r' do |file|
       parser.filedata = file.read
     end
-    parser.parse
     return parser
   end
 
@@ -30,7 +29,6 @@ class Parser
     parser = Parser.new
     parser.filedata = ''
     $stdin.each_line { |line| parser.filedata += line + "\n" }
-    parser.parse
     return parser
   end
 

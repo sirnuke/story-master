@@ -91,7 +91,13 @@ output = source + '.lua' if source and output.nil?
 
 if source
   Log.i 'SM', "Processing #{source} -> #{output}"
+  parser = Parser.file source
 else
   Log.i 'SM', "Processing $stdin -> $stdout"
+  parser = Parser.stdin
 end
+
+parser.parse
+
+puts parser
 
