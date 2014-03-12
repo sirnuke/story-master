@@ -26,6 +26,7 @@ Dir.chdir File.dirname(__FILE__) + Constants::SOURCE_DIRECTORY do
   require './exceptions'
 
   require './block'
+  require './directive'
 end
 
 def usage
