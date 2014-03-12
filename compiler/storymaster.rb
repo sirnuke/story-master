@@ -28,6 +28,9 @@ Dir.chdir File.dirname(__FILE__) + Constants::SOURCE_DIRECTORY do
   require './block'
   require './directive'
   require './scope'
+
+  require './tokenizer'
+  require './parser'
 end
 
 def usage
