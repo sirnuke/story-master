@@ -11,11 +11,14 @@ require 'getoptlong'
 
 module Constants
   APP_NAME = 'StoryMaster Compiler'
-  APP_VERSION = '0.0.1'
+  VERSION_MAJOR = 0
+  VERSION_MINOR = 0
+  VERSION_PATCH = 1
+  APP_VERSION = "#{VERSION_MAJOR}.#{VERSION_MINOR}.#{VERSION_PATCH}"
 
   SOURCE_DIRECTORY = '/source/'
 
-  EXIT_SUCESS = 0
+  EXIT_SUCCESS = 0
   EXIT_FAILURE = -1
   EXIT_CRITICAL = -2
 end
