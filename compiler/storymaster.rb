@@ -24,6 +24,8 @@ Dir.chdir File.dirname(__FILE__) + Constants::SOURCE_DIRECTORY do
   require './logging'
   require './position'
   require './exceptions'
+
+  require './block'
 end
 
 def usage
