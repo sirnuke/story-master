@@ -73,12 +73,15 @@ def getopts
   rescue GetoptLong::Error
     Log.e 'GetOpts', "Error while processing arguments: #{opts.error_message}"
   end
-  Log.e 'GetOpts', "Require exactly one input file" if ARGV.size != 1
+  Log.e 'GetOpts', "Requires one input file" if ARGV.size > 1
   return ARGV.first, output
 end
 
 source, output = getopts
-output = source + '.lua' if output.nil?
+output = source + '.lua' if source and output.nil?
 
-Log.i 'SM', "Processing #{source} -> #{output}"
+if source
+  Log.i 'SM', "Processing #{source} -> #{output}"
+else
+  Log.i 'SM', "Processing $stdin -> $stdout"
 
