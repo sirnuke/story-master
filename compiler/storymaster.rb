@@ -101,6 +101,14 @@ else
 end
 
 parser.parse
-
 puts parser
+
+if output
+  File.open(output, 'w') do |f|
+    parser.write f
+  end
+else
+  parser.write $stdout
+end
+
 
