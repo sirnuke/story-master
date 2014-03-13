@@ -1,2 +1,5 @@
 .*.swp
 examples/*.lua
+runtime/Makefile
+runtime/*.so
+runtime/*.make
