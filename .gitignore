@@ -2,6 +2,7 @@
 examples/*.lua
 Makefile
 *.so
+*.a
 *.make
 obj
 sim

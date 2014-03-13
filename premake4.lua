@@ -30,7 +30,7 @@ solution "StoryMaster"
   project "Runtime"
     language "C++"
     targetname "storymaster"
-    kind "SharedLib"
+    kind "StaticLib"
 
     files { "runtime/source/*.cpp", "runtime/include/*.h" }
     includedirs { "runtime/include" }
