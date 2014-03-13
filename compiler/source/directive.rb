@@ -71,7 +71,7 @@ class Directive
   end
 
   def validate(token)
-    Log.internal TAG, "Directive #{self.type} doesn't implement validate method"
+    Log.internal TAG, "Directive #{self.type} doesn't implement the validate method"
   end
 
   def complete?
@@ -80,6 +80,10 @@ class Directive
 
   def append(token)
     @block.append token
+  end
+
+  def write_lua(out, tab)
+    Log.internal TAG, "Directive #{self.type} doesn't implement the write_lua method"
   end
 
   def to_s

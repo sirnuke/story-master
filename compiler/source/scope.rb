@@ -45,6 +45,12 @@ class Scope
     return directive, active
   end
 
+  def write_lua(output, tab)
+    @directives.each do |directive|
+      directive.write_lua output, tab
+    end
+  end
+
   def to_s
     result = ''
     @directives.each { |d| result += d.to_s }

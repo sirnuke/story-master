@@ -21,6 +21,8 @@ module Constants
   EXIT_SUCCESS = 0
   EXIT_FAILURE = -1
   EXIT_CRITICAL = -2
+
+  BASE_INDENT = '  '
 end
 
 Dir.chdir File.dirname(__FILE__) + Constants::SOURCE_DIRECTORY do
@@ -105,10 +107,10 @@ puts parser
 
 if output
   File.open(output, 'w') do |f|
-    parser.write f
+    parser.write_lua f
   end
 else
-  parser.write $stdout
+  parser.write_lua $stdout
 end
 
 
