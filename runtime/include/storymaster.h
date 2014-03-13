@@ -18,4 +18,7 @@ namespace sm
 
 } //namespace
 
+#include <core.h>
+#include <scene.h>
+
 #endif//___SM_STORYMASTER_H___

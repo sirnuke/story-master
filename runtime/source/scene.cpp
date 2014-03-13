@@ -7,7 +7,7 @@
 
 #include "scene.h"
 
-sm::Scene::Scene()
+sm::Scene::Scene(Core *core) : core(core)
 {
 }
 

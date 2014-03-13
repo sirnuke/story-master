@@ -11,13 +11,16 @@
 namespace sm
 {
 
+class Core;
+
 class Scene
 {
 public:
-  Scene();
+  Scene(Core *core);
   ~Scene();
 
 private:
+  Core *core;
 
 };
 
