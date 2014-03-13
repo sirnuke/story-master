@@ -6,11 +6,31 @@
 -- premake4.lua - Premake configuration for the storymaster runtime
 
 solution "StoryMaster"
-  configurations { "SharedDebug", "SharedRelease", "StaticDebug", "StaticRelease" }
-  language "C++"
+  configurations { "Debug", "Release" }
 
-  project "StoryMasterRuntime"
+  project "Simulator"
+    language "C++"
+    targetname "sim"
+    kind "ConsoleApp"
+
+    files { "simulator/source/*.cpp", "runtime/include/*.h" }
+    includedirs { "simulator/include", "runtime/include" }
+    links { "Runtime" }
+
+    flags { "ExtraWarnings" }
+
+    configuration "Debug"
+      defines { "_DEBUG" }
+      flags { "Symbols" }
+
+    configuration "Release"
+      defines { "NDEBUG" }
+      flags { "Optimize" }
+
+  project "Runtime"
+    language "C++"
     targetname "storymaster"
+    kind "SharedLib"
 
     files { "runtime/source/*.cpp", "runtime/include/*.h" }
     includedirs { "runtime/include" }
@@ -18,17 +38,11 @@ solution "StoryMaster"
 
     flags { "ExtraWarnings" }
 
-    configuration "Shared*"
-      kind "SharedLib"
-
-    configuration "Static*"
-      kind "StaticLib"
-
-    configuration "*Debug"
+    configuration "Debug"
       defines { "_DEBUG" }
       flags { "Symbols" }
 
-    configuration "*Release"
+    configuration "Release"
       defines { "NDEBUG" }
       flags { "Optimize" }
 
