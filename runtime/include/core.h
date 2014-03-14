@@ -10,9 +10,11 @@
 
 #include <stdbool.h>
 
-typedef struct
+#include "types.h"
+
+struct sm_core
 {
-} sm_core;
+};
 
 bool sm_core_init(sm_core *c);
 bool sm_core_deinit(sm_core *c);

@@ -16,7 +16,7 @@
 
 #include "scene.h"
 
-bool sm_scene_init(sm_scene *s, struct sm_core *c, const char *filename, const char *name)
+bool sm_scene_init(sm_scene *s, sm_core *c, const char *filename, const char *name)
 {
   assert(s);
   assert(c);
@@ -32,6 +32,4 @@ bool sm_scene_deinit(sm_scene *s)
   memset(s, 0, sizeof(sm_scene));
   return true;
 }
-
-
 
