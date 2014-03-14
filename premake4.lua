@@ -33,7 +33,7 @@ solution "StoryMaster"
     kind "StaticLib"
 
     files { "runtime/source/*.cpp", "runtime/include/*.h" }
-    includedirs { "runtime/include" }
+    includedirs { "runtime/include", "/usr/include/lua5.2" }
     links { "lua5.2" }
 
     flags { "ExtraWarnings" }
