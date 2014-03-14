@@ -3,33 +3,35 @@
 //
 // See LICENSE for licensing information.
 //
-// scene.cpp - Implements the Scene class
+// scene.c - Implements the Scene struct
 
-#include <cassert>
+#include <assert.h>
+#include <errno.h>
+#include <string.h>
+#include <stdlib.h>
 
-extern "C"
-{
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
-}
 
 #include "scene.h"
 
-sm::Scene::Scene(Core *core) : init(false), core(core), lua(NULL)
+bool sm_scene_init(sm_scene *s, struct sm_core *c, const char *filename, const char *name)
 {
-  assert(core);
-}
+  assert(s);
+  assert(c);
 
-sm::Scene::~Scene()
-{
-}
-
-bool sm::Scene::load(const std::string &filename, const std::string &name)
-{
-  this->name = name;
-  this->filename = filename;
-  init = true;
   return true;
 }
+
+bool sm_scene_deinit(sm_scene *s)
+{
+  assert(s);
+  free(s->filename);
+  free(s->name);
+  memset(s, 0, sizeof(sm_scene));
+  return true;
+}
+
+
 

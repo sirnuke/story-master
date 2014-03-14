@@ -8,24 +8,14 @@
 #ifndef ___SM_CORE_H___
 #define ___SM_CORE_H___
 
-namespace sm
+#include <stdbool.h>
+
+typedef struct
 {
+} sm_core;
 
-class Core
-{
-public:
-  Core();
-  ~Core();
-
-  bool initialize();
-
-  bool isInit() { return init; }
-
-private:
-  bool init;
-};
-
-}
+bool sm_core_init(sm_core *c);
+bool sm_core_deinit(sm_core *c);
 
 #endif//___SM_CORE_H___
 

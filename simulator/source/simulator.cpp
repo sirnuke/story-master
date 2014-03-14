@@ -13,8 +13,12 @@
 
 int main(int argc, const char *argv[])
 {
-  sm::Core core;
-  sm::Scene scene(&core);
+  sm_core core;
+  sm_scene scene;
+
+  sm_core_init(&core);
+  sm_scene_init(&scene, &core, "examples/dialog.scene.lua", "dialog");
+
   return 0;
 }
 

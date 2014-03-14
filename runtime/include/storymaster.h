@@ -8,15 +8,10 @@
 #ifndef ___SM_STORYMASTER_H___
 #define ___SM_STORYMASTER_H___
 
-namespace sm
-{
-
-  const int VERSION_MAJOR = 0;
-  const int VERSION_MINOR = 0;
-  const int VERSION_PATCH = 1;
-  const char *VERSION = "0.0.1";
-
-} //namespace
+const int SM_VERSION_MAJOR = 0;
+const int SM_VERSION_MINOR = 0;
+const int SM_VERSION_PATCH = 1;
+const char *SM_VERSION_STRING = "0.0.1";
 
 #include <core.h>
 #include <scene.h>

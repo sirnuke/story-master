@@ -3,21 +3,25 @@
 //
 // See LICENSE for licensing information.
 //
-// core.cpp - Class wrapping around an initialized instance of the runtime
+// core.c - Class wrapping around an initialized instance of the runtime
+
+#include <assert.h>
+#include <errno.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "core.h"
 
-sm::Core::Core() : init(false)
+bool sm_core_init(sm_core *c)
 {
+  assert(c);
+  memset(c, 0, sizeof(sm_core));
+  return true;
 }
 
-sm::Core::~Core()
+bool sm_core_deinit(sm_core *c)
 {
-}
-
-bool sm::Core::initialize()
-{
-  init = true;
+  assert(c);
   return true;
 }
 

@@ -8,35 +8,24 @@
 #ifndef ___SM_SCENE_H___
 #define ___SM_SCENE_H___
 
-#include <string>
+#include <stdbool.h>
 
-namespace sm
-{
-
-class Core;
+//struct sm_core;
 struct lua_State;
 
-class Scene
+typedef struct
 {
-public:
-  Scene(Core *core);
-  ~Scene();
-
-  bool load(const std::string &filename, const std::string &name);
-
-  bool isInit() { return init; }
-
-private:
-  bool init;
-  Core *core;
-  std::string filename;
-  std::string name;
+  struct sm_core *c;
 
   lua_State *lua;
 
-};
+  char *filename;
+  char *name;
 
-} // namespace
+} sm_scene;
+
+bool sm_scene_init(sm_scene *s, struct sm_core *c, const char *filename, const char *name);
+bool sm_scene_deinit(sm_scene *s);
 
 #endif//___SM_SCENE_H___
 
