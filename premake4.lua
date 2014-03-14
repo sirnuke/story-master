@@ -15,7 +15,7 @@ solution "StoryMaster"
 
     files { "simulator/source/*.cpp", "runtime/include/*.h" }
     includedirs { "simulator/include", "runtime/include" }
-    links { "Runtime" }
+    links { "lua5.2", "Runtime" }
 
     flags { "ExtraWarnings" }
 
