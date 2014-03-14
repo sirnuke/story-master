@@ -28,6 +28,10 @@ bool sm_scene_init(sm_scene *s, sm_core *c, const char *filename, const char *na
   assert(s->filename);
   assert(s->name);
 
+  s->lua = luaL_newstate();
+  assert(s->lua);
+  luaL_openlibs(s->lua);
+
   return true;
 }
 
@@ -36,6 +40,7 @@ bool sm_scene_deinit(sm_scene *s)
   assert(s);
   free(s->filename);
   free(s->name);
+  lua_close(s->lua);
   memset(s, 0, sizeof(sm_scene));
   return true;
 }
