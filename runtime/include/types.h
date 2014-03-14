@@ -10,10 +10,13 @@
 
 #include <stdbool.h>
 
+#define _SM_STRINGIFY(X) #X
+#define _SM_STR(X) _SM_STRINGIFY(X)
+
 #define SM_VERSION_MAJOR 0
 #define SM_VERSION_MINOR 0
 #define SM_VERSION_PATCH 1
-#define SM_VERSION_STRING #SM_VERSION_MAJOR "." #SM_VERSION_MINOR "." #SM_VERSION_PATCH
+#define SM_VERSION_STRING _SM_STR(SM_VERSION_MAJOR) "." _SM_STR(SM_VERSION_MINOR) "." _SM_STR(SM_VERSION_PATCH)
 
 typedef struct sm_core sm_core;
 typedef struct sm_scene sm_scene;
