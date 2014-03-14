@@ -8,12 +8,17 @@
 #ifndef ___SM_STORYMASTER_H___
 #define ___SM_STORYMASTER_H___
 
-const int SM_VERSION_MAJOR = 0;
-const int SM_VERSION_MINOR = 0;
-const int SM_VERSION_PATCH = 1;
-const char *SM_VERSION_STRING = "0.0.1";
+#ifdef  __cplusplus
+extern "C"
+{
+#endif//__cplusplus
 
+#include <types.h>
 #include <core.h>
 #include <scene.h>
+
+#ifdef  __cplusplus
+}
+#endif//__cplusplus
 
 #endif//___SM_STORYMASTER_H___
