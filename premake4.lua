@@ -28,11 +28,11 @@ solution "StoryMaster"
       flags { "Optimize" }
 
   project "Runtime"
-    language "C++"
+    language "C"
     targetname "storymaster"
     kind "StaticLib"
 
-    files { "runtime/source/*.cpp", "runtime/include/*.h" }
+    files { "runtime/source/*.c", "runtime/include/*.h" }
     includedirs { "runtime/include", "/usr/include/lua5.2" }
     links { "lua5.2" }
 
