@@ -22,6 +22,7 @@ bool sm_core_init(sm_core *c)
 bool sm_core_deinit(sm_core *c)
 {
   assert(c);
+  memset(c, 0, sizeof(sm_core));
   return true;
 }
 

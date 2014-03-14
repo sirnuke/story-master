@@ -20,6 +20,13 @@ bool sm_scene_init(sm_scene *s, sm_core *c, const char *filename, const char *na
 {
   assert(s);
   assert(c);
+  memset(s, 0, sizeof(sm_scene));
+
+  s->filename = strdup(filename);
+  s->name = strdup(filename);
+
+  assert(s->filename);
+  assert(s->name);
 
   return true;
 }
