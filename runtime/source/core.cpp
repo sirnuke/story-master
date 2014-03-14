@@ -7,11 +7,17 @@
 
 #include "core.h"
 
-sm::Core::Core()
+sm::Core::Core() : init(false)
 {
 }
 
 sm::Core::~Core()
 {
+}
+
+bool sm::Core::initialize()
+{
+  init = true;
+  return true;
 }
 

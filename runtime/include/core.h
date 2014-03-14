@@ -17,7 +17,10 @@ public:
   Core();
   ~Core();
 
+  bool initialize();
+
 private:
+  bool init;
 };
 
 }
