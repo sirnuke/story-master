@@ -19,6 +19,8 @@ public:
 
   bool initialize();
 
+  bool isInit() { return init; }
+
 private:
   bool init;
 };
