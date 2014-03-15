@@ -22,9 +22,10 @@ int main(int argc, const char *argv[])
   sm_scene *scene = (sm_scene *)(malloc(sizeof(sm_scene)));
 
   sm_core_init(core);
-  sm_scene_init(scene, core, "examples/dialog.scene.lua", "dialog");
+  sm_scene_init(scene, core, "dialog");
 
   // ...
+  sm_scene_load_from_file(scene, "examples/dialog.scene.lua");
 
   sm_scene_deinit(scene);
   sm_core_deinit(core);
