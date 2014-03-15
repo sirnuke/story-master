@@ -16,21 +16,17 @@
 
 #include "scene.h"
 
-bool sm_scene_init(sm_scene *s, sm_core *c, const char *filename, const char *name)
+bool sm_scene_init(sm_scene *s, sm_core *c, const char *name)
 {
   assert(s);
   assert(c);
   memset(s, 0, sizeof(sm_scene));
 
-  s->filename = strdup(filename);
-  s->name = strdup(filename);
+  s->c = c;
 
-  assert(s->filename);
+  s->name = strdup(name);
+
   assert(s->name);
-
-  s->lua = luaL_newstate();
-  assert(s->lua);
-  luaL_openlibs(s->lua);
 
   return true;
 }
@@ -40,8 +36,35 @@ bool sm_scene_deinit(sm_scene *s)
   assert(s);
   free(s->filename);
   free(s->name);
-  lua_close(s->lua);
+  if (s->lua) lua_close(s->lua);
   memset(s, 0, sizeof(sm_scene));
   return true;
+}
+
+bool sm_scene_load_from_file(sm_scene *s, const char *filename)
+{
+  assert(s);
+  assert(s->c);
+
+  s->filename = strdup(filename);
+
+  s->lua = luaL_newstate();
+  assert(s->lua);
+  luaL_openlibs(s->lua);
+
+  int res = luaL_loadfile(s->lua, s->filename);
+
+  switch (res)
+  {
+  case LUA_ERRSYNTAX: 
+  case LUA_ERRMEM:
+  case LUA_ERRGCMM:
+    errno = res;
+    return false;
+  case LUA_OK:
+    return true;
+  default:
+    assert(false);
+  }
 }
 
