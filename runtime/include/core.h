@@ -3,7 +3,7 @@
 //
 // See LICENSE for licensing information.
 //
-// core.h - Class wrapping around an initialized instance of the runtime
+// core.h - Defines the core struct and API calls
 
 #ifndef ___SM_CORE_H___
 #define ___SM_CORE_H___
@@ -16,8 +16,8 @@ struct sm_core
 {
 };
 
-int sm_core_init(sm_core *c);
-int sm_core_deinit(sm_core *c);
+int sm_core_init(sm_core *core);
+int sm_core_deinit(sm_core *core);
 
 #endif//___SM_CORE_H___
 

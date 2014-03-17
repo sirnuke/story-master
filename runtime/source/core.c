@@ -3,7 +3,7 @@
 //
 // See LICENSE for licensing information.
 //
-// core.c - Class wrapping around an initialized instance of the runtime
+// core.c - Implements the core API calls
 
 #include <assert.h>
 #include <errno.h>
@@ -12,17 +12,17 @@
 
 #include "core.h"
 
-int sm_core_init(sm_core *c)
+int sm_core_init(sm_core *core)
 {
-  assert(c);
-  memset(c, 0, sizeof(sm_core));
+  assert(core);
+  memset(core, 0, sizeof(sm_core));
   return SM_OK;
 }
 
-int sm_core_deinit(sm_core *c)
+int sm_core_deinit(sm_core *core)
 {
-  assert(c);
-  memset(c, 0, sizeof(sm_core));
+  assert(core);
+  memset(core, 0, sizeof(sm_core));
   return SM_OK;
 }
 
