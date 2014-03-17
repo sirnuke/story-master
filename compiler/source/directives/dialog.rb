@@ -21,7 +21,7 @@ class Dialog < Directive
   end
 
   def write_lua(out, tab)
-    out.puts "#{Constants::BASE_INDENT * tab}dialog('#{@speaker}', '#{@block}')"
+    out.puts "#{Constants::BASE_INDENT * tab}dialog(ptr, '#{@speaker}', '#{@block}')"
   end
 
   def to_s
