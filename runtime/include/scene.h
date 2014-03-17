@@ -20,10 +20,10 @@ struct sm_scene
   int err;
 };
 
-int sm_scene_init(sm_scene *scene, sm_session *session, const char *name);
+int sm_scene_init_from_file(sm_scene *scene, sm_session *session, const char *name,
+    const char *filename);
 int sm_scene_deinit(sm_scene *scene);
 
-int sm_scene_load_from_file(sm_scene *scene, const char *filename);
 int sm_scene_execute(sm_scene *scene);
 
 #endif//___SM_SCENE_H___
