@@ -33,9 +33,7 @@ int sm_scene_init(sm_scene *s, sm_core *c, const char *name)
   s->c = c;
 
   s->name = strdup(name);
-
-  if (!s->name)
-    return SM_ERROR_MEMORY;
+  if (!s->name) return SM_ERROR_MEMORY;
 
   return SM_OK;
 }
@@ -48,8 +46,7 @@ int sm_scene_deinit(sm_scene *s)
   if (s->lua)
   {
     int res = sm_scene_deload(s);
-    if (res != SM_OK)
-      return res;
+    if (res != SM_OK) return res;
   }
   memset(s, 0, sizeof(sm_scene));
   return SM_OK;
@@ -61,10 +58,10 @@ int sm_scene_load_from_file(sm_scene *s, const char *filename)
   assert(s->c);
 
   s->filename = strdup(filename);
+  if (!s->filename) return SM_ERROR_MEMORY;
 
   s->lua = luaL_newstate();
-  if (!s->lua)
-    return SM_ERROR_MEMORY;
+  if (!s->lua) return SM_ERROR_MEMORY;
   luaL_openlibs(s->lua);
 
   int res = luaL_loadfile(s->lua, s->filename);

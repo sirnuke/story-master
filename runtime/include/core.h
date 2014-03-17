@@ -16,8 +16,8 @@ struct sm_core
 {
 };
 
-bool sm_core_init(sm_core *c);
-bool sm_core_deinit(sm_core *c);
+int sm_core_init(sm_core *c);
+int sm_core_deinit(sm_core *c);
 
 #endif//___SM_CORE_H___
 
