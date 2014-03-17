@@ -16,6 +16,8 @@ struct sm_scene
 
   char *name;
   char *filename;
+  char *function;
+  int function_length;
 
   int err;
 };

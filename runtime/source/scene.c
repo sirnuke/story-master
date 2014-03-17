@@ -18,14 +18,24 @@
 #include "scene.h"
 #include "session.h"
 
+// Aka BUFFER_SIZE + scene->name + \0 should cover execute_(name)
+// and setup_(name)
+static const int _SM_SCENE_FUNCTION_BUFFER_SIZE = 10;
+
 static int _sm_scene_init_common(sm_scene *scene, sm_session *session, const char *name)
 {
   assert(scene);
   assert(session);
+
   memset(scene, 0, sizeof(sm_scene));
   scene->session = session;
+
   scene->name = strdup(name);
   if (!scene->name) return SM_ERROR_MEMORY;
+
+  scene->function_length = _SM_SCENE_FUNCTION_BUFFER_SIZE + strlen(name) + 1;
+  scene->function = malloc(scene->function_length);
+  if (!scene->function) return SM_ERROR_MEMORY;
   return SM_OK;
 }
 
@@ -45,10 +55,28 @@ int sm_scene_init_from_file(sm_scene *scene, sm_session *session, const char *na
     return SM_ERROR_LUA;
   }
 
-  // TODO: Check that execute_(scene->name) and setup_(scene->name)
-  // exist, and call the setup function.  Setup should return a single
-  // table of settings, which can be compared against expected values.
-  //
+  res = snprintf(scene->function, scene->function_length, "setup_%s", scene->name);
+  assert(res <= scene->function_length - 1);
+  lua_getglobal(scene->session->lua, scene->function);
+  if (!lua_isfunction(scene->session->lua, -1))
+    return SM_ERROR_SCENE_BAD_SETUP;
+  lua_pushlightuserdata(scene->session->lua, scene);
+  lua_call(scene->session->lua, 1, 1);
+
+  if (!lua_istable(scene->session->lua, -1))
+    return SM_ERROR_SCENE_BAD_SETUP;
+
+  // TODO: Check table values (versions, etc)
+
+  lua_pop(scene->session->lua, 1);
+
+  res = snprintf(scene->function, scene->function_length, "execute_%s", scene->name);
+  assert(res <= scene->function_length - 1);
+  lua_getglobal(scene->session->lua, scene->function);
+  if (!lua_isfunction(scene->session->lua, -1))
+    return SM_ERROR_SCENE_MISSING_EXECUTE;
+  lua_pop(scene->session->lua, 1);
+
   // TODO: Register 'name' in the sm_session
 
   return SM_OK;
@@ -57,6 +85,7 @@ int sm_scene_init_from_file(sm_scene *scene, sm_session *session, const char *na
 int sm_scene_deinit(sm_scene *scene)
 {
   if (!scene) return SM_OK;
+  free(scene->function);
   free(scene->filename);
   free(scene->name);
   memset(scene, 0, sizeof(sm_scene));
