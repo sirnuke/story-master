@@ -16,6 +16,7 @@ extern "C"
 #include <types.h>
 #include <core.h>
 #include <scene.h>
+#include <session.h>
 
 #ifdef  __cplusplus
 }

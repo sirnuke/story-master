@@ -22,6 +22,7 @@
 
 typedef struct sm_core sm_core;
 typedef struct sm_scene sm_scene;
+typedef struct sm_session sm_session;
 
 #endif//___SM_TYPES_H___
 
