@@ -59,12 +59,12 @@ int sm_scene_init_from_file(sm_scene *scene, sm_session *session, const char *na
   assert(res <= scene->function_length - 1);
   lua_getglobal(scene->session->lua, scene->function);
   if (!lua_isfunction(scene->session->lua, -1))
-    return SM_ERROR_SCENE_BAD_SETUP;
+    return SM_ERROR_LUA_RUNTIME;
   lua_pushlightuserdata(scene->session->lua, scene);
   lua_call(scene->session->lua, 1, 1);
 
   if (!lua_istable(scene->session->lua, -1))
-    return SM_ERROR_SCENE_BAD_SETUP;
+    return SM_ERROR_LUA_RUNTIME;
 
   // TODO: Check table values (versions, etc)
 
@@ -74,7 +74,7 @@ int sm_scene_init_from_file(sm_scene *scene, sm_session *session, const char *na
   assert(res <= scene->function_length - 1);
   lua_getglobal(scene->session->lua, scene->function);
   if (!lua_isfunction(scene->session->lua, -1))
-    return SM_ERROR_SCENE_MISSING_EXECUTE;
+    return SM_ERROR_LUA_RUNTIME;
   lua_pop(scene->session->lua, 1);
 
   // TODO: Register 'name' in the sm_session
