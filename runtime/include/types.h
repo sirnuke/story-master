@@ -8,8 +8,6 @@
 #ifndef ___SM_TYPES_H___
 #define ___SM_TYPES_H___
 
-#include <stdbool.h>
-
 #define _SM_STRINGIFY(X) #X
 #define _SM_STR(X) _SM_STRINGIFY(X)
 
