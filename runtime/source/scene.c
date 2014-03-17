@@ -6,9 +6,10 @@
 // scene.c - Implements the Scene struct
 
 #include <assert.h>
-#include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+
+#include <stdio.h>
 
 #include <lua.h>
 #include <lualib.h>
@@ -16,7 +17,14 @@
 
 #include "scene.h"
 
-bool sm_scene_init(sm_scene *s, sm_core *c, const char *name)
+static int _sm_callback_setup(lua_State *lua)
+{
+  assert(lua);
+  printf("Setup callback from %p!\n", lua);
+  return 0;
+}
+
+int sm_scene_init(sm_scene *s, sm_core *c, const char *name)
 {
   assert(s);
   assert(c);
@@ -26,22 +34,28 @@ bool sm_scene_init(sm_scene *s, sm_core *c, const char *name)
 
   s->name = strdup(name);
 
-  assert(s->name);
+  if (!s->name)
+    return SM_ERROR_MEMORY;
 
-  return true;
+  return SM_OK;
 }
 
-bool sm_scene_deinit(sm_scene *s)
+int sm_scene_deinit(sm_scene *s)
 {
   assert(s);
   free(s->filename);
   free(s->name);
-  if (s->lua) lua_close(s->lua);
+  if (s->lua)
+  {
+    int res = sm_scene_deload(s);
+    if (res != SM_OK)
+      return res;
+  }
   memset(s, 0, sizeof(sm_scene));
-  return true;
+  return SM_OK;
 }
 
-bool sm_scene_load_from_file(sm_scene *s, const char *filename)
+int sm_scene_load_from_file(sm_scene *s, const char *filename)
 {
   assert(s);
   assert(s->c);
@@ -49,22 +63,38 @@ bool sm_scene_load_from_file(sm_scene *s, const char *filename)
   s->filename = strdup(filename);
 
   s->lua = luaL_newstate();
-  assert(s->lua);
+  if (!s->lua)
+    return SM_ERROR_MEMORY;
   luaL_openlibs(s->lua);
 
   int res = luaL_loadfile(s->lua, s->filename);
 
-  switch (res)
+  if (res != LUA_OK)
   {
-  case LUA_ERRSYNTAX: 
-  case LUA_ERRMEM:
-  case LUA_ERRGCMM:
-    errno = res;
-    return false;
-  case LUA_OK:
-    return true;
-  default:
-    assert(false);
+    s->err = res;
+    return SM_ERROR_LUA;
   }
+
+  lua_register(s->lua, "setup", _sm_callback_setup);
+
+  res = lua_pcall(s->lua, 0, LUA_MULTRET, 0);
+
+  if (res != LUA_OK)
+  {
+    s->err = res;
+    return SM_ERROR_LUA;
+  }
+  return SM_OK;
+}
+
+int sm_scene_deload(sm_scene *s)
+{
+  assert(s);
+  if (s->lua)
+  {
+    lua_close(s->lua);
+    s->lua = NULL;
+  }
+  return SM_OK;
 }
 

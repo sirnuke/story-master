@@ -20,11 +20,15 @@ struct sm_scene
 
   char *name;
   char *filename;
+
+  int err;
 };
 
-bool sm_scene_init(sm_scene *s, sm_core *c, const char *name);
-bool sm_scene_deinit(sm_scene *s);
-bool sm_scene_load_from_file(sm_scene *s, const char *filename);
+int sm_scene_init(sm_scene *s, sm_core *c, const char *name);
+int sm_scene_deinit(sm_scene *s);
+
+int sm_scene_load_from_file(sm_scene *s, const char *filename);
+int sm_scene_deload(sm_scene *s);
 
 #endif//___SM_SCENE_H___
 
