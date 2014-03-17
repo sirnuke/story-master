@@ -13,6 +13,7 @@
 #include <lualib.h>
 #include <lauxlib.h>
 
+#include "directives.h"
 #include "session.h"
 
 int sm_session_init(sm_session *session, sm_core *core, const char *name)
@@ -31,7 +32,7 @@ int sm_session_init(sm_session *session, sm_core *core, const char *name)
   if (!session->lua) return SM_ERROR_MEMORY;
   luaL_openlibs(session->lua);
 
-  //lua_register(s->lua, "setup", _sm_callback_setup);
+  lua_register(session->lua, "dialog", &_sm_directive_dialog);
 
   return SM_OK;
 }
