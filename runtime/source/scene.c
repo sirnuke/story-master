@@ -98,6 +98,12 @@ int sm_scene_execute(sm_scene *scene)
   assert(scene);
   assert(scene->session);
 
+  lua_getglobal(scene->session->lua, scene->function);
+  if (!lua_isfunction(scene->session->lua, -1))
+    return SM_ERROR_LUA_RUNTIME;
+  lua_pushlightuserdata(scene->session->lua, scene);
+  lua_call(scene->session->lua, 1, 0);
+
   return SM_OK;
 }
 
