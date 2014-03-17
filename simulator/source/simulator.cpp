@@ -34,6 +34,7 @@ int main(int argc, const char *argv[])
   sm_core_deinit(core);
 
   free(scene);
+  free(session);
   free(core);
 
   return 0;
