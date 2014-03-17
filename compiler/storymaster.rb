@@ -44,11 +44,16 @@ Usage: #{$0} [options] file...
 
   -h  --help          Print this help statement
   -v  --version       Print version and license information
+  -n  --name=name     Manually set the scene name
   -o  --output=file   Output to a specific file
 
-Script requires at least one source filename to compile.  The compiled
-Lua script is written to the same directory as the source unless the
---output argument is set.
+Script requires at least one source filename to compile.  The generated
+Lua script is written to stdout when input is read from stdin, or the
+same directory as the source overridden by the --output argument.
+
+Name is parsed from the filename, minus '.scene' and various symbols
+replaced with an underscore.  This must be manually set when reading
+from stdin.
 
 0 is returned on success, negative number otherwise.
 
@@ -67,9 +72,11 @@ def getopts
   opts = GetoptLong.new(
     [ '--help',     '-h', GetoptLong::NO_ARGUMENT ],
     [ '--version',  '-v', GetoptLong::NO_ARGUMENT ],
-    [ '--output',   '-o', GetoptLong::REQUIRED_ARGUMENT ]
+    [ '--name',     '-n', GetoptLong::REQUIRED_ARGUMENT ],
+    [ '--output',   '-o', GetoptLong::REQUIRED_ARGUMENT ],
   )
   opts.quiet = true
+  name = nil
   output = nil
   begin
     opts.each do |opt, arg|
@@ -80,6 +87,8 @@ def getopts
         version
       when '--output'
         output = arg
+      when '--name'
+        name = arg
       else
         Log.internal 'GetOpts', "Unknown processed argument of #{opt} (#{arg})"
       end
@@ -88,18 +97,27 @@ def getopts
     Log.e 'GetOpts', "Error while processing arguments: #{opts.error_message}"
   end
   Log.e 'GetOpts', "Requires one input file" if ARGV.size > 1
-  return ARGV.first, output
+  return ARGV.first, name, output
 end
 
-source, output = getopts
-output = source + '.lua' if source and output.nil?
+source, name, output = getopts
+
+Log.e 'GetOpts', "Must set name with --name when reading from stdin" unless source or name
+
+if source 
+  name = File.basename(source, '.scene') unless name
+  name.gsub!(/\W/, '_')
+  unless output
+    output = File.dirname(source) + '/' + File.basename(source, '.scene') + '.lua'
+  end
+end
 
 if source
   Log.i 'SM', "Processing #{source} -> #{output}"
-  parser = Parser.file source
+  parser = Parser.file(name, source)
 else
   Log.i 'SM', "Processing $stdin -> $stdout"
-  parser = Parser.stdin
+  parser = Parser.stdin(name)
 end
 
 parser.parse
