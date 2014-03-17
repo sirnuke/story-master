@@ -18,6 +18,10 @@
 #define SM_VERSION_PATCH 1
 #define SM_VERSION_STRING _SM_STR(SM_VERSION_MAJOR) "." _SM_STR(SM_VERSION_MINOR) "." _SM_STR(SM_VERSION_PATCH)
 
+#define SM_OK 0
+#define SM_ERROR_MEMORY 1
+#define SM_ERROR_LUA 2
+
 typedef struct sm_core sm_core;
 typedef struct sm_scene sm_scene;
 
