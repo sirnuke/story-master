@@ -19,6 +19,8 @@
 #define SM_OK 0
 #define SM_ERROR_MEMORY 1
 #define SM_ERROR_LUA 2
+#define SM_ERROR_SCENE_BAD_SETUP 3
+#define SM_ERROR_SCENE_MISSING_EXECUTE 4
 
 typedef struct sm_core sm_core;
 typedef struct sm_scene sm_scene;
