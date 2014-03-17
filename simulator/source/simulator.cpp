@@ -25,9 +25,8 @@ int main(int argc, const char *argv[])
   // TODO: Check return valuez and all that
   sm_core_init(core);
   sm_session_init(session, core, "common");
-  sm_scene_init(scene, session, "dialog");
+  sm_scene_init_from_file(scene, session, "dialog", "example/dialog.lua");
 
-  sm_scene_load_from_file(scene, "examples/dialog.scene.lua");
   sm_scene_execute(scene);
 
   sm_scene_deinit(scene);
