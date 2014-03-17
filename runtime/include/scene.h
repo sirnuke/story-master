@@ -3,20 +3,16 @@
 //
 // See LICENSE for licensing information.
 //
-// scene.h - Defines the Scene class
+// scene.h - Defines the scene struct and API calls
 
 #ifndef ___SM_SCENE_H___
 #define ___SM_SCENE_H___
 
 #include "types.h"
 
-struct lua_State;
-
 struct sm_scene
 {
-  struct sm_core *c;
-
-  struct lua_State *lua;
+  struct sm_session *session;
 
   char *name;
   char *filename;
@@ -24,11 +20,11 @@ struct sm_scene
   int err;
 };
 
-int sm_scene_init(sm_scene *s, sm_core *c, const char *name);
-int sm_scene_deinit(sm_scene *s);
+int sm_scene_init(sm_scene *scene, sm_session *session, const char *name);
+int sm_scene_deinit(sm_scene *scene);
 
-int sm_scene_load_from_file(sm_scene *s, const char *filename);
-int sm_scene_deload(sm_scene *s);
+int sm_scene_load_from_file(sm_scene *scene, const char *filename);
+int sm_scene_execute(sm_scene *scene);
 
 #endif//___SM_SCENE_H___
 
