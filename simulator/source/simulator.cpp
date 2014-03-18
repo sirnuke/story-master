@@ -14,6 +14,11 @@
 
 using namespace std;
 
+static void dialog(sm_scene *scene, const char *speaker, const char *line)
+{
+  cout << speaker << ": " << line << endl;
+}
+
 int main(int argc, const char *argv[])
 {
   cout << "Operating over [examples/dialog.lua] with runtime " SM_VERSION_STRING << endl;
@@ -26,6 +31,8 @@ int main(int argc, const char *argv[])
   sm_core_init(core);
   sm_session_init(session, core, "common");
   sm_scene_init_from_file(scene, session, "dialog", "examples/dialog.lua");
+
+  core->dialog = &dialog;
 
   sm_scene_execute(scene);
 
