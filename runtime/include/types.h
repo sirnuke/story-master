@@ -24,5 +24,7 @@ typedef struct sm_core sm_core;
 typedef struct sm_scene sm_scene;
 typedef struct sm_session sm_session;
 
+typedef void (*sm_callback_dialog)(sm_scene *, const char *, const char *);
+
 #endif//___SM_TYPES_H___
 
