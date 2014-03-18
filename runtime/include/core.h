@@ -14,6 +14,7 @@
 
 struct sm_core
 {
+  sm_callback_dialog dialog;
 };
 
 int sm_core_init(sm_core *core);
