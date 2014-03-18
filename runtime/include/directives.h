@@ -12,6 +12,6 @@
 
 struct lua_State;
 
-int _sm_directive_dialog(struct lua_State *lua);
+int _sm_directives_register(struct lua_State *lua);
 
 #endif//___SM_DIRECTIVES_H___

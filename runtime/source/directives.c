@@ -15,7 +15,7 @@
 
 #include "directives.h"
 
-int _sm_directive_dialog(struct lua_State *lua)
+static int _sm_directive_dialog(lua_State *lua)
 {
   assert(lua);
   int args = lua_gettop(lua);
@@ -30,5 +30,14 @@ int _sm_directive_dialog(struct lua_State *lua)
 
   lua_pop(lua, args);
   return 0;
+}
+
+int _sm_directives_register(struct lua_State *lua)
+{
+  assert(lua);
+
+  lua_register(lua, "dialog", &_sm_directive_dialog);
+
+  return SM_OK;
 }
 

@@ -32,7 +32,9 @@ int sm_session_init(sm_session *session, sm_core *core, const char *name)
   if (!session->lua) return SM_ERROR_MEMORY;
   luaL_openlibs(session->lua);
 
-  lua_register(session->lua, "dialog", &_sm_directive_dialog);
+  int res = _sm_directives_register(session->lua);
+
+  if (res != SM_OK) return res;
 
   return SM_OK;
 }
