@@ -13,7 +13,10 @@
 #include <lualib.h>
 #include <lauxlib.h>
 
+#include "core.h"
 #include "directives.h"
+#include "scene.h"
+#include "session.h"
 
 static int _sm_directive_dialog(lua_State *lua)
 {
@@ -26,7 +29,14 @@ static int _sm_directive_dialog(lua_State *lua)
   assert(lua_isstring(lua, 2));
   assert(lua_isstring(lua, 3));
 
-  printf("Dialog: %s: %s\n", lua_tostring(lua, 2), lua_tostring(lua, 3));
+  sm_scene *scene = lua_touserdata(lua, 1);
+
+  assert(scene);
+  assert(scene->session);
+  assert(scene->session->core);
+  assert(scene->session->core->dialog);
+
+  (scene->session->core->dialog)(scene, lua_tostring(lua, 2), lua_tostring(lua, 3));
 
   lua_pop(lua, args);
   return 0;
