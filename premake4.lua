@@ -5,6 +5,13 @@
 --
 -- premake4.lua - Premake configuration for the storymaster runtime
 
+local ycm_extra_conf = "\"\\n" ..
+  "def FlagsForFile(filename, **kwargs):\\n" ..
+  "  flags = \\\"$(CFLAGS)\\\".split()\\n" ..
+  "  flags.remove('-MMD')\\n" ..
+  "  return { 'flags': flags, 'do_cache': True }\\n" ..
+  "\""
+
 solution "StoryMaster"
   configurations { "Debug", "Release" }
 
@@ -18,6 +25,8 @@ solution "StoryMaster"
     links { "lua5.2", "Runtime" }
 
     flags { "ExtraWarnings" }
+
+    prebuildcommands { string.format("@echo %s > simulator/.ycm_extra_conf.py", ycm_extra_conf) }
 
     configuration "Debug"
       defines { "_DEBUG" }
@@ -37,6 +46,8 @@ solution "StoryMaster"
     links { "lua5.2" }
 
     flags { "ExtraWarnings" }
+
+    prebuildcommands { string.format("@echo %s > runtime/.ycm_extra_conf.py", ycm_extra_conf) }
 
     configuration "Debug"
       defines { "_DEBUG" }
