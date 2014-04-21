@@ -6,3 +6,4 @@ Makefile
 *.make
 obj
 sim
+.ycm_extra_conf.py*
